@@ -8,7 +8,6 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { Lamp } from './entities/lamp.entity';
 import { LampsService } from './lamps.service';
 import { CreateLampDto } from './dtos/create-lamp.dto';
 import { UpdateLampDto } from './dtos/update-lamp.dto';
@@ -18,12 +17,12 @@ export class LampsController {
   constructor(private readonly lampsService: LampsService) {}
 
   @Get()
-  getLamps(@Query('status') status: 'light' | 'dark' | null): Lamp[] {
+  getLamps(@Query('status') status: 'light' | 'dark' | null) {
     return this.lampsService.getLamps(status);
   }
 
   @Get(':lampId')
-  getLampById(@Param('lampId') lampId: number): Lamp {
+  getLampById(@Param('lampId') lampId: number) {
     return this.lampsService.getLampById(lampId);
   }
 

@@ -1,38 +1,59 @@
 import { Injectable } from '@nestjs/common';
-import { Lamp } from './entities/lamp.entity';
-import { CreateLampDto } from './dtos/create-lamp.dto';
-import { UpdateLampDto } from './dtos/update-lamp.dto';
 
 @Injectable()
 export class LampsService {
-  private lamps: Lamp[] = [];
-
-  getLamps(status: 'light' | 'dark' | null): Lamp[] {
+  getLamps(status: 'light' | 'dark' | null) {
     if (status) {
-      return this.lamps.filter((lamp) => lamp.status === status);
+      console.log(`get ${status} Lamps`);
     } else {
-      return this.lamps;
+      console.log(`get all Lamps`);
     }
   }
 
-  getLampById(id: number): Lamp {
-    return this.lamps.find((lamp) => lamp.lampId === id);
+  getLampById(id: number) {
+    console.log(`get ${id} Lamp`);
   }
 
-  createLamp(lampData: CreateLampDto) {
-    const lampId = this.lamps.length + 1;
-    const createdLamp: Lamp = { ...lampData, lampId };
-    this.lamps.push(createdLamp);
+  createLamp(lampData: {
+    lampName: string;
+    location: {
+      x: number;
+      y: number;
+    };
+    adjoiningPlace: string;
+  }) {
+    console.log(
+      `create ${lampData?.lampName} Lamp. position x=${lampData?.location?.x} y=${lampData?.location?.y}. adjoining ${lampData?.adjoiningPlace}`,
+    );
   }
 
-  updateLamp(id: number, updatedLampData: UpdateLampDto) {
-    const lamp = this.getLampById(id);
-    this.deleteLamp(id);
-    this.lamps.push({ ...lamp, ...updatedLampData });
+  updateLamp(
+    id: number,
+    updatedLampData: {
+      lampName?: string;
+      location?: {
+        x: number;
+        y: number;
+      };
+      adjoiningPlace?: string;
+    },
+  ) {
+    console.log(
+      `update ${id} Lamp. to ${
+        updatedLampData?.lampName ? `name ${updatedLampData?.lampName},` : ''
+      } ${
+        updatedLampData?.location
+          ? `position x=${updatedLampData?.location.x} y=${updatedLampData?.location.y},`
+          : ''
+      }  ${
+        updatedLampData?.adjoiningPlace
+          ? `adjoining ${updatedLampData?.adjoiningPlace}`
+          : ''
+      }`,
+    );
   }
 
   deleteLamp(id: number) {
-    this.getLampById(id);
-    this.lamps = this.lamps.filter((lamp) => lamp.lampId !== id);
+    console.log(`delete ${id} Lamp.`);
   }
 }
