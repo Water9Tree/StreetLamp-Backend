@@ -23,7 +23,7 @@ export class LampsController {
   }
 
   @Get(':lampId')
-  getLampById(@Param('lampId') lampId: number) {
+  getLampById(@Param('lampId') lampId: ObjectId) {
     return this.lampsService.getLampById(lampId);
   }
 

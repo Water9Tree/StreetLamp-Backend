@@ -21,6 +21,16 @@ export class LampsRepository {
     }
   }
 
+  async getLampById(lampId: ObjectId): Promise<LampDocument | null> {
+    try {
+      const lamp = await this.lampModel.findById(lampId);
+      return lamp;
+    } catch (err) {
+      console.log('Error retrieving lamp by ID:', err.message);
+      throw err;
+    }
+  }
+
   createLamp(lampData: {
     lampName: string;
     location: {

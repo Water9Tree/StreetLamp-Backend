@@ -22,8 +22,20 @@ export class LampsService {
       });
   }
 
-  getLampById(id: number) {
-    console.log(`get ${id} Lamp`);
+  getLampById(lampId: ObjectId) {
+    const lamp = this.lampRepository.getLampById(lampId);
+    return lamp
+      .then((res) => {
+        if (!res) {
+          console.log('Lamp not found');
+          return null;
+        }
+        console.log(`get ${lampId} Lamp`, res);
+        return res;
+      })
+      .catch((err) => {
+        console.log('Error get lamp by ID in service:', err);
+      });
   }
 
   createLamp(lampData: {
