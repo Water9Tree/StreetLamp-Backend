@@ -1,16 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { LampsRepository } from './lamps.repository';
+import { ObjectId } from 'mongoose';
 
 @Injectable()
 export class LampsService {
   constructor(private readonly lampRepository: LampsRepository) {}
 
   getLamps(status: 'light' | 'dark' | null) {
-    if (status) {
-      console.log(`get ${status} Lamps`);
-    } else {
-      console.log(`get all Lamps`);
-    }
+    const lamps = this.lampRepository.getLamps(status);
+    return lamps
+      .then((res) => {
+        if (status) {
+          console.log(`get ${status} Lamps`, res);
+        } else {
+          console.log(`get all Lamps`, res);
+        }
+        return res;
+      })
+      .catch((err) => {
+        console.log('Error get lamps in service:', err);
+      });
   }
 
   getLampById(id: number) {
@@ -32,7 +41,7 @@ export class LampsService {
   }
 
   updateLamp(
-    id: number,
+    lampId: ObjectId,
     updatedLampData: {
       lampName?: string;
       location?: {
@@ -42,22 +51,26 @@ export class LampsService {
       adjoiningPlace?: string;
     },
   ) {
-    console.log(
-      `update ${id} Lamp. to ${
-        updatedLampData?.lampName ? `name ${updatedLampData?.lampName},` : ''
-      } ${
-        updatedLampData?.location
-          ? `position x=${updatedLampData?.location.x} y=${updatedLampData?.location.y},`
-          : ''
-      }  ${
-        updatedLampData?.adjoiningPlace
-          ? `adjoining ${updatedLampData?.adjoiningPlace}`
-          : ''
-      }`,
-    );
+    const updatedLamp = this.lampRepository.updateLamp(lampId, updatedLampData);
+    return updatedLamp
+      .then((res) => {
+        console.log(`update ${lampId} Lamp. to ${res}`);
+        return res;
+      })
+      .catch((err) => {
+        console.log('Error updating lamp in service:', err);
+      });
   }
 
-  deleteLamp(id: number) {
-    console.log(`delete ${id} Lamp.`);
+  deleteLamp(lampId: ObjectId) {
+    const deletedLamp = this.lampRepository.deleteLamp(lampId);
+    return deletedLamp
+      .then((res) => {
+        console.log(`delete ${lampId} Lamp.`);
+        return res;
+      })
+      .catch((err) => {
+        console.log('Error deleting lamp in service:', err);
+      });
   }
 }

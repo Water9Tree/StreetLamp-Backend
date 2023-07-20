@@ -11,6 +11,7 @@ import {
 import { LampsService } from './lamps.service';
 import { CreateLampDto } from './dtos/create-lamp.dto';
 import { UpdateLampDto } from './dtos/update-lamp.dto';
+import { ObjectId } from 'mongoose';
 
 @Controller('lamps')
 export class LampsController {
@@ -33,14 +34,14 @@ export class LampsController {
 
   @Patch(':lampId')
   updateLamp(
-    @Param('lampId') lampId: number,
+    @Param('lampId') lampId: ObjectId,
     @Body() updatedLampData: UpdateLampDto,
   ) {
     return this.lampsService.updateLamp(lampId, updatedLampData);
   }
 
   @Delete(':lampId')
-  deleteLamp(@Param('lampId') lampId: number) {
+  deleteLamp(@Param('lampId') lampId: ObjectId) {
     return this.lampsService.deleteLamp(lampId);
   }
 }
