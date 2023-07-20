@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import { LampsRepository } from './lamps.repository';
 
 @Injectable()
 export class LampsService {
+  constructor(private readonly lampRepository: LampsRepository) {}
+
   getLamps(status: 'light' | 'dark' | null) {
     if (status) {
       console.log(`get ${status} Lamps`);
@@ -25,6 +28,7 @@ export class LampsService {
     console.log(
       `create ${lampData?.lampName} Lamp. position x=${lampData?.location?.x} y=${lampData?.location?.y}. adjoining ${lampData?.adjoiningPlace}`,
     );
+    this.lampRepository.createLamp(lampData);
   }
 
   updateLamp(
