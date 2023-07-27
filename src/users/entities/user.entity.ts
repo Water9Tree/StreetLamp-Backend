@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
+import { Role } from './authorities';
 
 export type UserDocument = User & Document;
 
@@ -16,6 +17,9 @@ export class User {
 
   @Prop()
   username: string;
+
+  @Prop()
+  role: Role;
 
   @Prop({ default: new Date(), type: mongoose.Schema.Types.Date })
   createdAt: Date;

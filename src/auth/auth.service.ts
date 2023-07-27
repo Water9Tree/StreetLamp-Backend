@@ -21,6 +21,7 @@ export class AuthService {
         const payload = {
           username: userByFindFirst.username,
           email: userByFindFirst.email,
+          role: userByFindFirst.role,
         };
         return {
           userByFindFirst,

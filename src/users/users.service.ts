@@ -8,13 +8,14 @@ export class UsersService {
   constructor(private readonly usersRepository: UsersRepository) {}
 
   async create(userData: CreateUserDto): Promise<User> {
-    const { email, loginId, username, password } = userData;
+    const { email, loginId, username, password, role } = userData;
 
     const user = new User();
     user.email = email;
     user.loginId = loginId;
     user.password = password;
     user.username = username;
+    user.role = role;
 
     await this.usersRepository.save(user);
     user.password = undefined;

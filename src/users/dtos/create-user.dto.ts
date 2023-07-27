@@ -1,4 +1,5 @@
-import { IsEmail, IsString } from 'class-validator';
+import { IsEmail, IsEnum, IsString } from 'class-validator';
+import { Authorities, Role } from '../entities/authorities';
 
 export class CreateUserDto {
   @IsEmail()
@@ -12,4 +13,7 @@ export class CreateUserDto {
 
   @IsString()
   readonly username: string;
+
+  @IsEnum(Authorities)
+  readonly role: Role;
 }
