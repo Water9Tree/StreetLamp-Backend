@@ -27,7 +27,7 @@ export class Lamp {
   @Prop()
   adjoiningPlace: string;
 
-  @Prop({ enum: ['light', 'dark'] })
+  @Prop({ enum: ['light', 'dark'], default: 'light' })
   status?: 'light' | 'dark';
 
   @Prop({ default: false })
