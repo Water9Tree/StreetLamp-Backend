@@ -4,7 +4,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { LampsModule } from './lamps/lamps.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-import { GeneratorModule } from './generator/generator.module';
 
 @Module({
   imports: [
@@ -22,7 +21,6 @@ import { GeneratorModule } from './generator/generator.module';
     }),
     UsersModule,
     AuthModule,
-    GeneratorModule,
   ],
   controllers: [],
   providers: [],
