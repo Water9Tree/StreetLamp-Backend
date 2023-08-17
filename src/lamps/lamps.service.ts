@@ -1,10 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { LampsRepository } from './lamps.repository';
 import { ObjectId } from 'mongoose';
+import { Cron, CronExpression } from '@nestjs/schedule';
+import { UsersRepository } from '../users/users.repository';
 
 @Injectable()
 export class LampsService {
-  constructor(private readonly lampRepository: LampsRepository) {}
+  constructor(
+    private readonly lampRepository: LampsRepository,
+    private readonly userRepository: UsersRepository,
+  ) {}
 
   getLamps(status: 'light' | 'dark' | null) {
     const lamps = this.lampRepository.getLamps(status);
@@ -84,5 +89,15 @@ export class LampsService {
       .catch((err) => {
         console.log('Error deleting lamp in service:', err);
       });
+  }
+
+  @Cron(CronExpression.EVERY_5_SECONDS)
+  handleCron() {
+    console.log('Called when the current second is 5');
+    this.getLamps('dark').then((lamps) => {
+      console.log(lamps + ' is dark!');
+        console.log('send dark lamp! ' + users);
+      });
+    });
   }
 }
