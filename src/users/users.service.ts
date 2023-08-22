@@ -16,6 +16,7 @@ export class UsersService {
     user.password = password;
     user.username = username;
     user.role = role;
+    user.expoToken = '';
 
     await this.usersRepository.save(user);
     user.password = undefined;
