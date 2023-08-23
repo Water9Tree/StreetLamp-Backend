@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { LampsRepository } from './lamps.repository';
 import { ObjectId } from 'mongoose';
-import { Cron, CronExpression } from '@nestjs/schedule';
 import { UsersRepository } from '../users/users.repository';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 export class LampsService {
@@ -94,8 +94,26 @@ export class LampsService {
   @Cron(CronExpression.EVERY_5_SECONDS)
   handleCron() {
     console.log('Called when the current second is 5');
-    this.getLamps('dark').then((lamps) => {
-      console.log(lamps + ' is dark!');
+    this.userRepository.getByRole('ROLE_ADMIN').then((users) => {
+      this.getLamps('dark').then((lamps) => {
+        console.log(lamps + ' is dark!');
+        for (const user of users) {
+          fetch('https://exp.host/--/api/v2/push/send', {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              to: user.expoToken,
+              title: `${lamps} are dark`,
+              body: `${lamps}`,
+            }),
+          })
+            .then(() => console.log('send!'))
+            .catch((err) => console.log(err));
+          console.log(user);
+        }
         console.log('send dark lamp! ' + users);
       });
     });
