@@ -11,7 +11,7 @@ export class LampsService {
     private readonly userRepository: UsersRepository,
   ) {}
 
-  getLamps(status: 'light' | 'dark' | null) {
+  getLamps(status: 'light' | 'dark' | 'normal') {
     const lamps = this.lampRepository.getLamps(status);
     return lamps
       .then((res) => {
@@ -91,7 +91,7 @@ export class LampsService {
       });
   }
 
-  @Cron(CronExpression.EVERY_5_SECONDS)
+  /* @Cron(CronExpression.EVERY_5_SECONDS)
   handleCron() {
     console.log('Called when the current second is 5');
     this.userRepository.getByRole('ROLE_ADMIN').then((users) => {
@@ -117,5 +117,5 @@ export class LampsService {
         console.log('send dark lamp! ' + users);
       });
     });
-  }
+  } */
 }
