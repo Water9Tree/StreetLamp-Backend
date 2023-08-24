@@ -27,8 +27,8 @@ export class Lamp {
   @Prop()
   adjoiningPlace: string;
 
-  @Prop({ enum: ['light', 'dark'], default: 'light' })
-  status?: 'light' | 'dark';
+  @Prop({ enum: ['light', 'dark', 'normal'], default: 'normal' })
+  status: 'light' | 'dark' | 'normal';
 
   @Prop({ default: false })
   isFavorite?: boolean;

@@ -9,7 +9,7 @@ export class AuthService {
     private readonly authRepository: AuthRepository,
   ) {}
 
-  async login(user: { loginId: string; password: string }) {
+  async login(user: { loginId: string; password: string; expoToken: string }) {
     console.log(user);
     const userAccounts = this.authRepository.findByLoginIdAndPassword(user);
     return userAccounts
@@ -17,6 +17,9 @@ export class AuthService {
         if (res.length === 0) {
           throw `계정 정보가 없습니다. 입력하신 loginId: ${user.loginId}, password: ${user.password}`;
         }
+
+        this.authRepository.updateExpoToken(user);
+
         const userByFindFirst = res[0];
         const payload = {
           username: userByFindFirst.username,

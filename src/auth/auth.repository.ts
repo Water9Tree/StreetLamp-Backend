@@ -23,4 +23,19 @@ export class AuthRepository {
       console.log('error...');
     }
   }
+
+  async updateExpoToken(user: {
+    loginId: string;
+    password: string;
+    expoToken: string;
+  }) {
+    const { loginId, password, expoToken } = user;
+    return this.usersModel.findOneAndUpdate(
+      {
+        loginId,
+        password,
+      },
+      { expoToken: expoToken },
+    );
+  }
 }

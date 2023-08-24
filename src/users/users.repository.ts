@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from './entities/user.entity';
+import { Role } from './entities/authorities';
 
 @Injectable()
 export class UsersRepository {
@@ -20,6 +21,15 @@ export class UsersRepository {
       return result.save();
     } catch (err) {
       console.log('error...');
+    }
+  }
+
+  async getByRole(role: Role): Promise<UserDocument[]> {
+    try {
+      return await this.usersModel.find({ role });
+    } catch (err) {
+      console.log('Error get users by role:', err.message);
+      throw err;
     }
   }
 }

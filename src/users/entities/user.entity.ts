@@ -18,6 +18,9 @@ export class User {
   @Prop()
   username: string;
 
+  @Prop({ default: null })
+  expoToken: string;
+
   @Prop()
   role: Role;
 

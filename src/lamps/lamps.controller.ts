@@ -27,7 +27,7 @@ export class LampsController {
     required: false,
   })
   @Get()
-  getLamps(@Query('status') status: 'light' | 'dark' | null) {
+  getLamps(@Query('status') status: 'light' | 'dark' | 'normal') {
     return this.lampsService.getLamps(status);
   }
 

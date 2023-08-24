@@ -7,7 +7,7 @@ import { Lamp, LampDocument } from './entities/lamp.entity';
 export class LampsRepository {
   constructor(@InjectModel(Lamp.name) private lampModel: Model<LampDocument>) {}
 
-  async getLamps(status: 'light' | 'dark' | null): Promise<LampDocument[]> {
+  async getLamps(status: 'light' | 'dark' | 'normal'): Promise<LampDocument[]> {
     try {
       if (!status) {
         const allLamps = await this.lampModel.find();
@@ -40,7 +40,7 @@ export class LampsRepository {
     adjoiningPlace: string;
   }): Promise<LampDocument> {
     try {
-      const result = new this.lampModel(lampData);
+      const result = new this.lampModel({ ...lampData, status: 'normal' });
       return result.save();
     } catch (err) {
       console.log('error...');
@@ -74,6 +74,15 @@ export class LampsRepository {
     } catch (err) {
       console.log('Error deleting lamp:', err.message);
       throw err;
+    }
+  }
+
+  async getAll() {
+    try {
+      return await this.lampModel.find({}).exec();
+    } catch (err) {
+      console.log('error... get All');
+      console.error(err);
     }
   }
 }
