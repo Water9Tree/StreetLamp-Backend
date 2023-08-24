@@ -76,4 +76,13 @@ export class LampsRepository {
       throw err;
     }
   }
+
+  async getAll() {
+    try {
+      return await this.lampModel.find({}).exec();
+    } catch (err) {
+      console.log('error... get All');
+      console.error(err);
+    }
+  }
 }
