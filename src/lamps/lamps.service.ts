@@ -122,8 +122,7 @@ export class LampsService {
     lampName: string,
     location: any,
   ) {
-    const lampInfo =
-      '가로등 이름:' + lampName + ' / ' + String(location) + '위치의 램프';
+    const lampInfo = lampName + '가로등';
     if (status == 'normal') {
       this.removeItemFromArray(this.lampsDark, lampInfo);
       this.removeItemFromArray(this.lampsLight, lampInfo);
@@ -133,7 +132,7 @@ export class LampsService {
       if (!this.lampsDark.includes(lampInfo)) {
         this.lampsDark.push(lampInfo);
         this.removeItemFromArray(this.lampsLight, lampInfo);
-        this.sendPush(user, lampInfo + '가 dark 상태입니다.');
+        this.sendPush(user, lampInfo + '이 dark 상태입니다.');
         return;
       }
     }
@@ -141,7 +140,7 @@ export class LampsService {
       if (!this.lampsLight.includes(lampInfo)) {
         this.lampsLight.push(lampInfo);
         this.removeItemFromArray(this.lampsDark, lampInfo);
-        this.sendPush(user, lampInfo + '가 light 상태입니다.');
+        this.sendPush(user, lampInfo + '이 light 상태입니다.');
         return;
       }
     }
@@ -163,7 +162,7 @@ export class LampsService {
       },
       body: JSON.stringify({
         to: user.expoToken,
-        title: `앱 <-> nest 알림 테스트`,
+        title: `가로등 알림`,
         body: lampInfo,
       }),
     })
