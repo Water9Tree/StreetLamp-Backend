@@ -4,6 +4,7 @@ import { ObjectId } from 'mongoose';
 import { UsersRepository } from '../users/users.repository';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { User } from '../users/entities/user.entity';
+import * as os from 'os';
 
 @Injectable()
 export class LampsService {
@@ -162,7 +163,7 @@ export class LampsService {
       },
       body: JSON.stringify({
         to: user.expoToken,
-        title: `가로등 알림`,
+        title: os?.hostname(),
         body: lampInfo,
       }),
     })
