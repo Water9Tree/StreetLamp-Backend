@@ -96,7 +96,7 @@ export class LampsService {
       });
   }
 
-  @Cron(CronExpression.EVERY_5_SECONDS)
+  /* @Cron(CronExpression.EVERY_5_SECONDS)
   handleCron() {
     console.log('Called when the current second is 5');
     this.userRepository.getByRole('ROLE_ADMIN').then((users) => {
@@ -169,5 +169,5 @@ export class LampsService {
     })
       .then(() => console.log('send!'))
       .catch((err) => console.log(err));
-  }
+  } */
 }
