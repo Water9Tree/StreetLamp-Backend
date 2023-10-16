@@ -17,9 +17,14 @@ export class UsersService {
     user.username = username;
     user.role = role;
     user.expoToken = '';
+    user.isNotificationEnabled = false;
 
     await this.usersRepository.save(user);
     user.password = undefined;
     return user;
+  }
+
+  async setNotificationEnable(isNotificationEnabled: boolean) {
+    await this.usersRepository.setNotificationEnable(isNotificationEnabled);
   }
 }

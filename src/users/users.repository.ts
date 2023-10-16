@@ -32,4 +32,18 @@ export class UsersRepository {
       throw err;
     }
   }
+
+  async setNotificationEnable(isNotificationEnabled: boolean) {
+    try {
+      return await this.usersModel.findOneAndUpdate(
+        {
+          loginId: 'admin',
+        },
+        { isNotificationEnabled: isNotificationEnabled },
+      );
+    } catch (err) {
+      console.log('Error get users set notification enable:', err.message);
+      throw err;
+    }
+  }
 }
